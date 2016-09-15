@@ -1,0 +1,47 @@
+﻿@model RezerwacjaBiletow.Models.Ticket
+
+@{
+    ViewBag.Title = "Szczegóły";
+}
+
+<h2>Szczegóły biletu</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Event.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Event.Date)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.Place)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Event.Place)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Seat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Seat)
+        </dd>
+
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Powrót", "Index")
+</p>

@@ -1,0 +1,131 @@
+﻿@model RezerwacjaBiletow.Models.Event
+
+@{
+    ViewBag.Title = "Szczegóły wydarzenia";
+}
+
+
+<div>
+    <h4>Wydarzenie</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Place)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Place)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Seats)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Seats)
+        </dd>
+        <dt>
+            Wolne miejsca:
+        </dt>
+
+        <dd>
+            @(Model.Seats - Model.Tickets.Count)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+    </dl>
+   
+
+
+</div>
+<h4>Zarezerwuj miejsce</h4>
+<div class="tickets">
+
+
+    @for (int i = 1; i <= Model.Seats; i++)
+    {
+        bool isEmpty = true;
+        foreach (var item in Model.Tickets)
+        {
+            if (item.Seat == i)
+            {
+                isEmpty = false;
+                <div class="ticket-box" style="background-color: coral">
+                    @i <br/>
+                    <b>ZAJĘTE</b>
+                </div>
+                break;
+            }
+        }
+        if (isEmpty)
+        {
+            
+            <div class="ticket-box" style="background-color:#79ca38">
+                @i<br />
+                <b>WOLNE</b>
+                @if (User.IsInRole("User") || User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Zarezerwuj bilet", "Book", "Events", new { id = Model.Id, seat = i }, "")
+                }
+            </div>
+        }
+
+
+    }
+
+</div>
+
+
+<style>
+    .ticket-box{
+        width: 100px;
+        float: left;
+        height: 80px;
+        border: 1px solid #000000;
+        text-align: center;
+    }
+    .tickets{
+        float: left;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+
+</style>
+<p>
+    @if (User.IsInRole("Admin")) {
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.Id }) 
+    }
+     |
+    @Html.ActionLink("Powrót", "Index")
+</p>
